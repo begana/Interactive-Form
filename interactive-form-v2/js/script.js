@@ -7,16 +7,21 @@ name.focus();
 
 const email = document.querySelector('#mail');
 
+const jobRole = document.querySelector('#title');
+const otherJobOption = document.querySelector('#title option[value="other"]');
+const otherJobInput = document.querySelector('#other-title');
+otherJobInput.hidden = true;
+jobRole.addEventListener('change', ()=>{
+    if( otherJobOption.selected === true ){
+        otherJobInput.hidden = false;
+    } else {
+        otherJobInput.hidden = true;
+    }
+});
 
-
-
-
-const otherTitle = document.querySelector('#other-title');
-otherTitle.style.display="none";
 
 const designTheme = document.querySelector('#design option');
 designTheme.hidden = true;
-
 
 
 
@@ -116,7 +121,6 @@ const bitcoin = document.querySelector('#bitcoin');
 const creditcardOption = document.querySelector('#payment option[value="credit card"]');
 const paypalOption = document.querySelector('#payment option[value="paypal"]');
 const bitcoinOption = document.querySelector('#payment option[value="bitcoin"]');
-console.log(paypalOption);
 
 paymentMethod.hidden = true;
 paypal.style.display = 'none';
@@ -144,9 +148,6 @@ payment.addEventListener('change', () => {
 
 
 
-const creditcardNumber = document.querySelector('#cc-num');
-const creditcardZip = document.querySelector('#zip');
-const creditcardCvv = document.querySelector('#cvv');
 
 const nameValidator = () => {
     const nameValue = name.value;
@@ -186,6 +187,51 @@ const activitiesValidator = () => {
     }
 }
 
+const creditcardNumber = document.querySelector('#cc-num');
+const creditcardZip = document.querySelector('#zip');
+const creditcardCvv = document.querySelector('#cvv');
+
+const ccNumberValidator = () => {
+
+    const ccNumValue = creditcardNumber.value;
+
+     if(/^\d{13,16}$/.test(ccNumValue)){
+            creditcardNumber.style.border = "#5e97b";
+            return true;
+        } else {
+            creditcardNumber.style.border = "3px solid red";
+            return false;
+        }
+    
+}
+
+const ccZipValidator = () => {
+
+    const ccZipValue = creditcardZip.value;
+
+    if(/^\d{5}$/.test(ccZipValue)){
+        creditcardZip.style.border = "#5e97b";
+        return true;
+    } else {
+        creditcardZip.style.border = "3px solid red";
+        return false;
+    }
+}
+
+const ccCvvValidator = () => {
+
+    const ccCvvValue = creditcardCvv.value;
+
+    if(/^\d{3}$/.test(ccCvvValue)){
+        creditcardCvv.style.border = "#5e97b";
+        return true;
+    } else {
+        creditcardCvv.style.border = "3px solid red";
+        return false;
+    }
+}
+
+
 
 
 form.addEventListener('submit', (e)=>{
@@ -202,5 +248,20 @@ form.addEventListener('submit', (e)=>{
     if(!activitiesValidator()){
         e.preventDefault();
         console.log("activity validator prevented submission")
+    }
+
+    if(!ccNumberValidator()){
+        e.preventDefault();
+        console.log("ccNumber validator prevented submission")
+    }
+
+    if(!ccZipValidator()){
+        e.preventDefault();
+        console.log("ccZip validator prevented submission")
+    }
+
+    if(!ccCvvValidator()){
+        e.preventDefault();
+        console.log("ccCvv validator prevented submission")
     }
 });

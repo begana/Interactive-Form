@@ -153,7 +153,7 @@ const nameValidator = () => {
     const nameValue = name.value;
 
     if( nameValue.length > 0 ){
-        name.sytle.border = "#5e97b";
+        name.style.border = "#5e97b";
         return true;
     } else {
         name.style.border = "3px solid red";

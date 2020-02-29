@@ -1,55 +1,101 @@
-console.log('added well');
+console.log('connected well');
 
 const form = document. querySelector('form');
 
 const name = document.querySelector('#name');
-name.focus();
 
 const email = document.querySelector('#mail');
 
+//job Role variables 
 const jobRole = document.querySelector('#title');
 const otherJobOption = document.querySelector('#title option[value="other"]');
 const otherJobInput = document.querySelector('#other-title');
+
+//design and color variables
+const designTheme = document.querySelector('#design option');
+const designSelect = document.querySelector('#design');
+
+const colorTheme = document.createElement('option');
+const colorSelect = document.querySelector('#color');
+
+const jsPuns = document.querySelector('#design option[value="js puns"]');
+const jsPunsColor1 = document.querySelector('#color option[value="cornflowerblue"]');
+const jsPunsColor2 = document.querySelector('#color option[value="darkslategrey"]');
+const jsPunsColor3 = document.querySelector('#color option[value="gold"]');
+
+const heartJs = document.querySelector('#design option[value="heart js"]');
+const heartJsColor1 = document.querySelector('#color option[value="tomato"]');
+const heartJsColor2 = document.querySelector('#color option[value="steelblue"]');
+const heartJsColor3 = document.querySelector('#color option[value="dimgrey"]');
+
+//activities variables 
+const activities = document.querySelector('.activities');
+const costMsg = document.createElement('element');
+activities.appendChild(costMsg);
+let totalCost = 0;
+
+//payment variables
+const payment = document.querySelector('#payment');
+const paymentMethod = document.querySelector('#payment option[value="select method"]');
+
+const creditcard = document.querySelector('#credit-card');
+const creditcardOption = document.querySelector('#payment option[value="credit card"]');
+
+const paypal = document.querySelector('#paypal');
+const paypalOption = document.querySelector('#payment option[value="paypal"]');
+
+const bitcoin = document.querySelector('#bitcoin');
+const bitcoinOption = document.querySelector('#payment option[value="bitcoin"]');
+
+
+
+
+
+
+// on page load, the cursor appears in the "Name" field, ready to type
+
+name.focus();
+
+
+
+
+//"Your job role" text field appears when user selects "Other" from the job Role menu
+
 otherJobInput.hidden = true;
+
 jobRole.addEventListener('change', ()=>{
+
     if( otherJobOption.selected === true ){
         otherJobInput.hidden = false;
     } else {
         otherJobInput.hidden = true;
     }
+
 });
 
 
-const designTheme = document.querySelector('#design option');
+
+
+//Until a theme is selected from the "Design" menu, no color options appear in the "Color" drop down
+//and the "Color" field reads "Please select a T-shirt theme"
+
 designTheme.hidden = true;
 
-
-
-
-
-const colorSelect = document.querySelector('#color');
-const colorTheme = document.createElement('option');
 colorTheme.textContent = "Please select a T-shirt theme";
 colorSelect.appendChild(colorTheme);
 colorTheme.selected = true;
 
-
 const colors = document.querySelectorAll('#color option');
 for ( let i = 0; i < colors.length; i ++ ){
+
     colors[i].hidden = true;
+
 }
 
-const designSelect = document.querySelector('#design');
-const jsPuns = document.querySelector('#design option[value="js puns"]');
-const heartJs = document.querySelector('#design option[value="heart js"]');
 
-const jsPunsColor1 = document.querySelector('#color option[value="cornflowerblue"]');
-const jsPunsColor2 = document.querySelector('#color option[value="darkslategrey"]');
-const jsPunsColor3 = document.querySelector('#color option[value="gold"]');
 
-const heartJsColor1 = document.querySelector('#color option[value="tomato"]');
-const heartJsColor2 = document.querySelector('#color option[value="steelblue"]');
-const heartJsColor3 = document.querySelector('#color option[value="dimgrey"]');
+
+//When a new theme is selected from the "Design" menu, the "Color" field and drop down menu is updated
 
 designSelect.addEventListener('change', () => {
 
@@ -69,16 +115,14 @@ designSelect.addEventListener('change', () => {
         jsPunsColor2.hidden = true;
         jsPunsColor3.hidden = true;
     }  
+
 });
 
 
 
 
-
-const activities = document.querySelector('.activities');
-const element = document.createElement('element');
-activities.appendChild(element);
-let totalCost = 0;
+//user cannot select two activities that are at the same time
+//Total cost of select activities is calculated and displayed blow the list of activities
 
 activities.addEventListener('change', (e) => {
 
@@ -86,19 +130,20 @@ activities.addEventListener('change', (e) => {
     const inputAtt = inputClicked.getAttribute('data-cost');
     const inputCost = parseInt(inputAtt);
     
-
     if( inputClicked.checked ){
         totalCost += inputCost;
     } else {
         totalCost -= inputCost;
     }
-    element.innerHTML = "Total : $" + totalCost;
+    costMsg.innerHTML = "Total : $" + totalCost;
 
     const dayAndTime = inputClicked.getAttribute('data-day-and-time');
     const checkboxes = document.querySelectorAll('.activities input');
 
     for ( let i = 0; i < checkboxes.length; i ++ ){
+
         const currentCheckbox = checkboxes[i].getAttribute('data-day-and-time');
+
         if( dayAndTime === currentCheckbox && inputClicked !== checkboxes[i] ){
             if( inputClicked.checked ){
                 checkboxes[i].disabled = true;
@@ -106,28 +151,24 @@ activities.addEventListener('change', (e) => {
                 checkboxes[i].disabled = false;
             }
         }
+
     }
+
 });
 
 
 
-
-const payment = document.querySelector('#payment');
-const paymentMethod = document.querySelector('#payment option[value="select method"]');
-
-const creditcard = document.querySelector('#credit-card');
-const paypal = document.querySelector('#paypal');
-const bitcoin = document.querySelector('#bitcoin');
-
-const creditcardOption = document.querySelector('#payment option[value="credit card"]');
-const paypalOption = document.querySelector('#payment option[value="paypal"]');
-const bitcoinOption = document.querySelector('#payment option[value="bitcoin"]');
+// Initially, the creit card section be selected and displayed in the form
+// when user select a payment option, other two payment options are hidden
 
 paymentMethod.hidden = true;
+
 paypal.style.display = 'none';
+
 bitcoin.style.display = 'none';
 
 payment.addEventListener('change', () => {
+
     if( creditcardOption.selected === true ){
         creditcard.style.display = 'block';
         paypal.style.display = 'none';
@@ -141,15 +182,19 @@ payment.addEventListener('change', () => {
         paypal.style.display = 'none';
         bitcoin.style.display = 'block';
     }
+
 });
 
 
+
+
+//Validate requird fields and provide error indications for invalid fields upon from submission
+//when user fills in valid information, error indications disappear and finally able to submit
 
 const nameValidator = () => {
 
     const nameValue = name.value;
     let nameLabel = document.querySelector('label[for="name"]');
-
     
     if( nameValue.length > 0 ){
         name.style.border = '';
@@ -169,7 +214,6 @@ const emailValidator = () => {
 
     const emailValue = email.value;
     const emailLabel = document.querySelector('label[for="mail"]');
-
     
     if( /^[^@]+@[^@.]+\.[a-z]+$/i.test(emailValue)){
         email.style.border = '';
@@ -214,17 +258,19 @@ const ccNumvalidator = () => {
     const ccNumLabel = document.querySelector('label[for="cc-num"]');
 
     if( creditcardOption.selected ){
+
         if( /^\d{13,16}$/.test(ccNumValue)){
             creditcardNumber.style.border = '';
             ccNumLabel.style.color = '';
             ccNumLabel.textContent = "Card Number:";
             return true;
-        }else{
+        } else {
             creditcardNumber.style.border = '3px solid red';
             ccNumLabel.style.color = 'red';
             ccNumLabel.textContent = "Unvalid Card Number";
             return false;
         }
+
     }
 }
 
@@ -235,17 +281,19 @@ const ccZipValidator = () => {
     const ccZipLabel = document.querySelector('label[for="zip"]');
 
     if( creditcardOption.selected ){
+
         if( /^\d{5}$/.test(ccZipValue)){
             creditcardZip.style.border = '';
             ccZipLabel.style.color = '';
             ccZipLabel.textContent = "Zip Code:";
             return true;
-        }else{
+        } else {
             creditcardZip.style.border = '3px solid red';
             ccZipLabel.style.color = 'red';
             ccZipLabel.textContent = "Unvalid Zip Code";
             return false;
         }
+
     }
 }
 
@@ -257,17 +305,19 @@ const cvvValidator = () => {
     const cvvLabel = document.querySelector('label[for="cvv"]');
 
     if( creditcardOption.selected ){
+
         if( /^\d{3}$/.test(cvvValue)){
             creditcardCvv.style.border = '';
             cvvLabel.style.color = '';
             cvvLabel.textContent = "CVV:";
             return true;
-        }else{
+        } else {
             creditcardCvv.style.border = '3px solid red';
             cvvLabel.style.color = 'red';
             cvvLabel.textContent = "Unvalid CVV";
             return false;
         }
+
     }
 }
 

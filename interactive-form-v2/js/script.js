@@ -132,13 +132,11 @@ payment.addEventListener('change', () => {
         creditcard.style.display = 'block';
         paypal.style.display = 'none';
         bitcoin.style.display = 'none';
-    }
-    if( paypalOption.selected === true ){
+    } else if( paypalOption.selected === true ){
         creditcard.style.display = 'none';
         paypal.style.display = 'block';
         bitcoin.style.display = 'none';
-    }
-    if( bitcoinOption.selected === true ){
+    } else if( bitcoinOption.selected === true ){
         creditcard.style.display = 'none';
         paypal.style.display = 'none';
         bitcoin.style.display = 'block';
@@ -208,28 +206,74 @@ const activityValidator = () => {
     
 }
 
-const ccNumberValidator = () => {
+
+const ccNumvalidator = () => {
 
     const creditcardNumber = document.querySelector('#cc-num');
     const ccNumValue = creditcardNumber.value;
-    const ccNumLabel = document.querySelector('label[for="cc-num]');
+    const ccNumLabel = document.querySelector('label[for="cc-num"]');
 
-    if(creditcardOption.checked){
-        if(/^\d{13,16}$/.test(ccNumValue)){
+    if( creditcardOption.selected ){
+        if( /^\d{13,16}$/.test(ccNumValue)){
             creditcardNumber.style.border = '';
             ccNumLabel.style.color = '';
             ccNumLabel.textContent = "Card Number:";
-        } else {
-            creditcardNumber.style.border = "3px solid red";
-            ccNumLabel.style.color = "red";
-            ccNumLabel.innerHTML = "<strong>unvalid number</strong>";
+            return true;
+        }else{
+            creditcardNumber.style.border = '3px solid red';
+            ccNumLabel.style.color = 'red';
+            ccNumLabel.textContent = "Unvalid Card Number";
+            return false;
         }
     }
 }
 
-// const creditcardNumber = document.querySelector('#cc-num');
-// const creditcardZip = document.querySelector('#zip');
-// const creditcardCvv = document.querySelector('#cvv');
+const ccZipValidator = () => {
+
+    const creditcardZip = document.querySelector('#zip');
+    const ccZipValue = creditcardZip.value;
+    const ccZipLabel = document.querySelector('label[for="zip"]');
+
+    if( creditcardOption.selected ){
+        if( /^\d{5}$/.test(ccZipValue)){
+            creditcardZip.style.border = '';
+            ccZipLabel.style.color = '';
+            ccZipLabel.textContent = "Zip Code:";
+            return true;
+        }else{
+            creditcardZip.style.border = '3px solid red';
+            ccZipLabel.style.color = 'red';
+            ccZipLabel.textContent = "Unvalid Zip Code";
+            return false;
+        }
+    }
+}
+
+
+const cvvValidator = () => {
+
+    const creditcardCvv = document.querySelector('#cvv');
+    const cvvValue = creditcardCvv.value;
+    const cvvLabel = document.querySelector('label[for="cvv"]');
+
+    if( creditcardOption.selected ){
+        if( /^\d{3}$/.test(cvvValue)){
+            creditcardCvv.style.border = '';
+            cvvLabel.style.color = '';
+            cvvLabel.textContent = "CVV:";
+            return true;
+        }else{
+            creditcardCvv.style.border = '3px solid red';
+            cvvLabel.style.color = 'red';
+            cvvLabel.textContent = "Unvalid CVV";
+            return false;
+        }
+    }
+}
+
+
+
+
 
 form.addEventListener('submit', (e)=> {
 
@@ -245,8 +289,18 @@ form.addEventListener('submit', (e)=> {
         e.preventDefault();
     }
 
-    if( ! ccNumberValidator() ){
+    if( ! ccNumvalidator() ){
         e.preventDefault();
     }
+
+    if( ! ccZipValidator() ){
+        e.preventDefault();
+    }
+
+    if( ! cvvValidator() ){
+        e.preventDefault();
+    }
+
+
 });
 

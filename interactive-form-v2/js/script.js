@@ -164,7 +164,6 @@ activities.addEventListener('change', (e) => {
 // when user select a payment option, other two payment options are hidden
 
 paymentMethod.hidden = true;
-creditcardOption.defaultSelected = true;
 
 paypal.style.display = 'none';
 
@@ -172,9 +171,6 @@ bitcoin.style.display = 'none';
 
 payment.addEventListener('change', () => {
 
-    if( paymentMethod.selected ){
-        creditcardOption.selected === true;
-    }
     if( creditcardOption.selected === true ){
         creditcard.style.display = 'block';
         paypal.style.display = 'none';
@@ -263,7 +259,7 @@ const ccNumvalidator = () => {
     const ccNumValue = creditcardNumber.value;
     const ccNumLabel = document.querySelector('label[for="cc-num"]');
 
-    if( creditcardOption.selected ){
+    if( creditcardOption.selected || paymentMethod.selected ){
 
         if( /^\d{13,16}$/.test(ccNumValue)){
             creditcardNumber.style.border = '';
@@ -286,7 +282,7 @@ const ccZipValidator = () => {
     const ccZipValue = creditcardZip.value;
     const ccZipLabel = document.querySelector('label[for="zip"]');
 
-    if( creditcardOption.selected ){
+    if( creditcardOption.selected || paymentMethod.selected){
 
         if( /^\d{5}$/.test(ccZipValue)){
             creditcardZip.style.border = '';
@@ -310,7 +306,7 @@ const cvvValidator = () => {
     const cvvValue = creditcardCvv.value;
     const cvvLabel = document.querySelector('label[for="cvv"]');
 
-    if( creditcardOption.selected ){
+    if( creditcardOption.selected || paymentMethod.selected ){
 
         if( /^\d{3}$/.test(cvvValue)){
             creditcardCvv.style.border = '';
@@ -357,7 +353,6 @@ form.addEventListener('submit', (e)=> {
     if( ! cvvValidator() ){
         e.preventDefault();
     }
-
 
 });
 

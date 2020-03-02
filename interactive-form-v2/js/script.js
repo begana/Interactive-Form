@@ -100,6 +100,7 @@ for ( let i = 0; i < colors.length; i ++ ){
 designSelect.addEventListener('change', () => {
 
     if( jsPuns.selected === true ){
+        jsPunsColor1.selected = true;
         jsPunsColor1.hidden = false;
         jsPunsColor2.hidden = false;
         jsPunsColor3.hidden = false;
@@ -108,6 +109,7 @@ designSelect.addEventListener('change', () => {
         heartJsColor3.hidden = true;
     }
     if( heartJs.selected === true ){
+        heartJsColor1.selected = true;
         heartJsColor1.hidden = false;
         heartJsColor2.hidden = false;
         heartJsColor3.hidden = false;
@@ -162,6 +164,7 @@ activities.addEventListener('change', (e) => {
 // when user select a payment option, other two payment options are hidden
 
 paymentMethod.hidden = true;
+creditcardOption.defaultSelected = true;
 
 paypal.style.display = 'none';
 
@@ -169,6 +172,9 @@ bitcoin.style.display = 'none';
 
 payment.addEventListener('change', () => {
 
+    if( paymentMethod.selected ){
+        creditcardOption.selected === true;
+    }
     if( creditcardOption.selected === true ){
         creditcard.style.display = 'block';
         paypal.style.display = 'none';
@@ -320,6 +326,7 @@ const cvvValidator = () => {
 
     }
 }
+
 
 
 

@@ -47,8 +47,6 @@ const paypalOption = document.querySelector('#payment option[value="paypal"]');
 const bitcoin = document.querySelector('#bitcoin');
 const bitcoinOption = document.querySelector('#payment option[value="bitcoin"]');
 
-console.log(creditcardOption);
-
 
 
 
@@ -170,8 +168,6 @@ activities.addEventListener('change', (e) => {
 paymentMethod.hidden = true;
 
 creditcardOption.selected = true;
-
-
 paypal.style.display = 'none';
 bitcoin.style.display = 'none';
 
@@ -280,6 +276,7 @@ const ccNumvalidator = () => {
         }
 
     } else {
+        
         return true;
     }
 }
@@ -304,6 +301,7 @@ const ccZipValidator = () => {
             return false;
         }
     } else {
+        
         return true;
     }
 }
@@ -330,6 +328,7 @@ const cvvValidator = () => {
         }
 
     } else {
+        
         return true;
     }
 }

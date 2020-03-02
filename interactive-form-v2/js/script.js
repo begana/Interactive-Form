@@ -47,6 +47,10 @@ const paypalOption = document.querySelector('#payment option[value="paypal"]');
 const bitcoin = document.querySelector('#bitcoin');
 const bitcoinOption = document.querySelector('#payment option[value="bitcoin"]');
 
+console.log(creditcardOption);
+
+
+
 
 
 
@@ -65,7 +69,7 @@ otherJobInput.hidden = true;
 
 jobRole.addEventListener('change', ()=>{
 
-    if( otherJobOption.selected === true ){
+    if( otherJobOption.selected ){
         otherJobInput.hidden = false;
     } else {
         otherJobInput.hidden = true;
@@ -165,25 +169,27 @@ activities.addEventListener('change', (e) => {
 
 paymentMethod.hidden = true;
 
-paypal.style.display = 'none';
+creditcardOption.selected = true;
 
+
+paypal.style.display = 'none';
 bitcoin.style.display = 'none';
 
-payment.addEventListener('change', () => {
+payment.addEventListener('change', (e) => {
 
-    if( creditcardOption.selected === true ){
+    if( creditcardOption.selected ){
         creditcard.style.display = 'block';
         paypal.style.display = 'none';
         bitcoin.style.display = 'none';
-    } else if( paypalOption.selected === true ){
+    } else if( paypalOption.selected ){
         creditcard.style.display = 'none';
         paypal.style.display = 'block';
         bitcoin.style.display = 'none';
-    } else if( bitcoinOption.selected === true ){
+    } else if( bitcoinOption.selected ){
         creditcard.style.display = 'none';
         paypal.style.display = 'none';
         bitcoin.style.display = 'block';
-    }
+    } 
 
 });
 
@@ -198,7 +204,7 @@ const nameValidator = () => {
     const nameValue = name.value;
     let nameLabel = document.querySelector('label[for="name"]');
     
-    if( nameValue.length > 0 ){
+    if( /^\D+$/.test(nameValue) ){
         name.style.border = '';
         nameLabel.style.color = '';
         nameLabel.textContent = "Name:";
@@ -259,7 +265,7 @@ const ccNumvalidator = () => {
     const ccNumValue = creditcardNumber.value;
     const ccNumLabel = document.querySelector('label[for="cc-num"]');
 
-    if( creditcardOption.selected || paymentMethod.selected ){
+    if( creditcardOption.selected ){
 
         if( /^\d{13,16}$/.test(ccNumValue)){
             creditcardNumber.style.border = '';
@@ -273,6 +279,8 @@ const ccNumvalidator = () => {
             return false;
         }
 
+    } else {
+        return true;
     }
 }
 
@@ -282,7 +290,7 @@ const ccZipValidator = () => {
     const ccZipValue = creditcardZip.value;
     const ccZipLabel = document.querySelector('label[for="zip"]');
 
-    if( creditcardOption.selected || paymentMethod.selected){
+    if( creditcardOption.selected ){
 
         if( /^\d{5}$/.test(ccZipValue)){
             creditcardZip.style.border = '';
@@ -295,7 +303,8 @@ const ccZipValidator = () => {
             ccZipLabel.textContent = "Unvalid Zip Code";
             return false;
         }
-
+    } else {
+        return true;
     }
 }
 
@@ -306,7 +315,7 @@ const cvvValidator = () => {
     const cvvValue = creditcardCvv.value;
     const cvvLabel = document.querySelector('label[for="cvv"]');
 
-    if( creditcardOption.selected || paymentMethod.selected ){
+    if( creditcardOption.selected ){
 
         if( /^\d{3}$/.test(cvvValue)){
             creditcardCvv.style.border = '';
@@ -320,6 +329,8 @@ const cvvValidator = () => {
             return false;
         }
 
+    } else {
+        return true;
     }
 }
 
@@ -328,30 +339,35 @@ const cvvValidator = () => {
 
 
 
-form.addEventListener('submit', (e)=> {
 
+
+form.addEventListener('submit', (e)=> {
+    
     if( ! nameValidator() ){
         e.preventDefault();
-    }
-
+    } 
+    
     if( ! emailValidator() ){
         e.preventDefault();
-    }
-
+    } 
+    
     if( ! activityValidator() ){
         e.preventDefault();
-    }
-
+    } 
+    
     if( ! ccNumvalidator() ){
         e.preventDefault();
-    }
-
+        console.log("ccNum");
+    } 
+    
     if( ! ccZipValidator() ){
         e.preventDefault();
-    }
-
+        console.log("ccZip");
+    } 
+    
     if( ! cvvValidator() ){
         e.preventDefault();
+        console.log("ccCvv");
     }
 
 });

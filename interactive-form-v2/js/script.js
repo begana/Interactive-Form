@@ -167,7 +167,6 @@ activities.addEventListener('change', (e) => {
 
 paymentMethod.hidden = true;
 
-creditcardOption.selected = true;
 paypal.style.display = 'none';
 bitcoin.style.display = 'none';
 
@@ -261,7 +260,7 @@ const ccNumvalidator = () => {
     const ccNumValue = creditcardNumber.value;
     const ccNumLabel = document.querySelector('label[for="cc-num"]');
 
-    if( creditcardOption.selected ){
+    if( creditcardOption.selected || paymentMethod ){
 
         if( /^\d{13,16}$/.test(ccNumValue)){
             creditcardNumber.style.border = '';
@@ -275,7 +274,7 @@ const ccNumvalidator = () => {
             return false;
         }
 
-    } else {
+    } else if ( paypalOption.selected || bitcoinOption.selected ) {
         
         return true;
     }
@@ -287,7 +286,7 @@ const ccZipValidator = () => {
     const ccZipValue = creditcardZip.value;
     const ccZipLabel = document.querySelector('label[for="zip"]');
 
-    if( creditcardOption.selected ){
+    if( creditcardOption.selected || paymentMethod ){
 
         if( /^\d{5}$/.test(ccZipValue)){
             creditcardZip.style.border = '';
@@ -300,7 +299,7 @@ const ccZipValidator = () => {
             ccZipLabel.textContent = "Unvalid Zip Code";
             return false;
         }
-    } else {
+    } else if ( paypalOption.selected || bitcoinOption.selected ) {
         
         return true;
     }
@@ -313,7 +312,7 @@ const cvvValidator = () => {
     const cvvValue = creditcardCvv.value;
     const cvvLabel = document.querySelector('label[for="cvv"]');
 
-    if( creditcardOption.selected ){
+    if( creditcardOption.selected || paymentMethod ){
 
         if( /^\d{3}$/.test(cvvValue)){
             creditcardCvv.style.border = '';
@@ -327,7 +326,7 @@ const cvvValidator = () => {
             return false;
         }
 
-    } else {
+    } else if ( paypalOption.selected || bitcoinOption.selected ) {
         
         return true;
     }

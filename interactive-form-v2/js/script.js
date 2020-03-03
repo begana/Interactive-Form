@@ -361,21 +361,18 @@ form.addEventListener('submit', (e)=> {
     
     if( ! ccNumvalidator() ){
         e.preventDefault();
-        console.log("ccNum");
     } else {
         return true;
     }
     
     if( ! ccZipValidator() ){
         e.preventDefault();
-        console.log("ccZip");
     } else {
         return true;
     }
     
     if( ! cvvValidator() ){
         e.preventDefault();
-        console.log("ccCvv");
     } else {
         return true;
     }
